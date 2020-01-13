@@ -21,7 +21,7 @@ func NordVPNCmd() map[string]string {
 	scanner := bufio.NewScanner(strings.NewReader(string(out)))
 	for scanner.Scan() {
 		line := strings.Split(scanner.Text(), ":")
-		key, value := line[0], line[1]
+		key, value := strings.TrimSpace(line[0]), strings.TrimSpace(line[1])
 		m[key] = value
 	}
 	return m
