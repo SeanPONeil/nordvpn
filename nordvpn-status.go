@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/schollz/closestmatch"
 	"log"
 	"os"
 	"os/exec"
@@ -26,6 +27,39 @@ func NordVPNCmd() map[string]string {
 	return m
 }
 
+// Fuzzy matches arg to NordVPN status key,
+// and returns a valid key
+func MatchKey(arg string) string {
+	keys := []string{
+		"Status",
+		"Current server",
+		"Country",
+		"City",
+		"Your new IP",
+		"Current technology",
+		"Current protocol",
+		"Transfer",
+		"Uptime"}
+
+	if Contains(keys, arg) == true {
+		return arg
+	} else {
+		bagSizes := []int{10}
+		cm := closestmatch.New(keys, bagSizes)
+		return cm.Closest(arg)
+	}
+}
+
+// Returns true if slice contains target string
+func Contains(slice []string, target string) bool {
+	for _, elem := range slice {
+		if elem == target {
+			return true
+		}
+	}
+	return false
+}
+
 func main() {
 
 	nordvpn := NordVPNCmd()
@@ -33,7 +67,7 @@ func main() {
 		// return value of Status if no args are passed in
 		fmt.Printf("%s", nordvpn["Status"])
 	} else if len(os.Args) == 2 {
-		key := os.Args[1]
+		key := MatchKey(os.Args[1])
 		fmt.Printf("%s", nordvpn[key])
 	} else {
 		fmt.Fprintf(os.Stderr, "nordvpn-status can only accept one argument")
