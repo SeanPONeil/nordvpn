@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -28,15 +28,15 @@ func NordVPNCmd() map[string]string {
 
 func main() {
 
-	cityPtr := flag.Bool("city", false, "Print city of NordVPN connection")
-
-	flag.Parse()
-
 	nordvpn := NordVPNCmd()
-	if *cityPtr == true {
-		fmt.Printf("%s", nordvpn["City"])
-	} else {
-		// print connection status by default
+	if len(os.Args) == 1 {
+		// return value of Status if no args are passed in
 		fmt.Printf("%s", nordvpn["Status"])
+	} else if len(os.Args) == 2 {
+		key := os.Args[1]
+		fmt.Printf("%s", nordvpn[key])
+	} else {
+		fmt.Fprintf(os.Stderr, "nordvpn-status can only accept one argument")
+		os.Exit(1)
 	}
 }
