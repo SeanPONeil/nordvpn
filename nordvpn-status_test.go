@@ -9,7 +9,7 @@ func TestSplitLines(t *testing.T) {
 
 	expected := []string{"foo", "bar", "baz"}
 
-	actual := SplitLines(s)
+	actual := splitLines(s)
 
 	if len(actual) != len(expected) {
 		t.Errorf("SplitLines(%s) = %v, actual %v", s, expected, actual)

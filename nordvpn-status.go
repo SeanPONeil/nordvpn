@@ -18,7 +18,7 @@ func NordVPNCmd() map[string]string {
 
 	m := map[string]string{}
 
-	for _, s := range SplitLines(string(out)) {
+	for _, s := range splitLines(string(out)) {
 		k, v := ParseKeyValue(s)
 		m[k] = v
 	}
@@ -26,7 +26,7 @@ func NordVPNCmd() map[string]string {
 	return m
 }
 
-func SplitLines(s string) []string {
+func splitLines(s string) []string {
 	var lines []string
 	scanner := bufio.NewScanner(strings.NewReader(s))
 	for scanner.Scan() {
