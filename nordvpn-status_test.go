@@ -1,21 +1,23 @@
 package main
 
 import (
-	"reflect"
 	"testing"
 )
 
 func TestSplitLines(t *testing.T) {
-	expected := `foo
-	bar
-	baz`
+	s := "foo\nbar\nbaz"
 
-	t.Logf("expected %s", expected)
+	expected := []string{"foo", "bar", "baz"}
 
-	actual := SplitLines(expected)
+	actual := SplitLines(s)
 
-	t.Logf("actual %s", actual)
-	if reflect.DeepEqual(expected, actual) {
-		t.Errorf("TestSplitLines failed, expected %s, actual %s", expected, actual)
+	if len(actual) != len(expected) {
+		t.Errorf("SplitLines(%s) = %v, actual %v", s, expected, actual)
+	}
+
+	for i, v := range actual {
+		if v != expected[i] {
+			t.Errorf("expected[%d] = %s, actual %s", i, expected[i], v)
+		}
 	}
 }
