@@ -27,6 +27,22 @@ func NordVPNCmd() map[string]string {
 	return m
 }
 
+func SplitLines(s string) []string {
+	var lines []string
+	scanner := bufio.NewScanner(strings.NewReader(s))
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines
+}
+
+func ParseKeyValue(s string) (string, string) {
+	split := strings.Split(s, ":")
+	key := strings.TrimSpace(split[0])
+	value := strings.TrimSpace(split[1])
+	return key, value
+}
+
 // Fuzzy matches arg to NordVPN status key,
 // and returns a valid key
 func MatchKey(arg string) string {
