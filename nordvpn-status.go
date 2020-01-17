@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"github.com/schollz/closestmatch"
 	"log"
@@ -76,6 +77,15 @@ func Contains(slice []string, target string) bool {
 }
 
 func main() {
+	statusPtr := flag.Bool("status", false, "Connection status")
+	serverPtr := flag.Bool("server", false, "Current server")
+	countryPtr := flag.Bool("country", false, "Country")
+	cityPtr := flag.Bool("city", false, "City")
+	ipPtr := flag.Bool("ip", false, "Your new IP")
+	techPtr := flag.Bool("technology", false, "Current technology")
+	transferPtr := flag.Bool("transfer", false, "Transfer")
+	uptimePtr := flag.Bool("uptimePtr", false, "Uptime")
+	flag.Parse()
 
 	nordvpn := NordVPNCmd()
 	if len(os.Args) == 1 {
