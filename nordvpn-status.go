@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-func NordVPNCmd() map[string]string {
+func nordVPNCmd() map[string]string {
 	out, err := exec.Command("nordvpn", "status").Output()
 	if err != nil {
 		log.Fatal(err)
@@ -20,7 +20,7 @@ func NordVPNCmd() map[string]string {
 	m := map[string]string{}
 
 	for _, s := range splitLines(string(out)) {
-		k, v := ParseKeyValue(s)
+		k, v := parseKeyValue(s)
 		m[k] = v
 	}
 
@@ -36,7 +36,7 @@ func splitLines(s string) []string {
 	return lines
 }
 
-func ParseKeyValue(s string) (string, string) {
+func parseKeyValue(s string) (string, string) {
 	kv := strings.Split(s, ":")
 	k := strings.TrimSpace(kv[0])
 	v := strings.TrimSpace(kv[1])
@@ -45,7 +45,7 @@ func ParseKeyValue(s string) (string, string) {
 
 // Fuzzy matches arg to NordVPN status key,
 // and returns a valid key
-func MatchKey(arg string) string {
+func matchKey(arg string) string {
 	keys := []string{
 		"Status",
 		"Current server",
@@ -60,7 +60,7 @@ func MatchKey(arg string) string {
 	if Contains(keys, arg) == true {
 		return arg
 	} else {
-		bagSizes := []int{10}
+		bagSizes := []int{30}
 		cm := closestmatch.New(keys, bagSizes)
 		return cm.Closest(arg)
 	}
@@ -87,12 +87,12 @@ func main() {
 	uptimePtr := flag.Bool("uptimePtr", false, "Uptime")
 	flag.Parse()
 
-	nordvpn := NordVPNCmd()
+	nordvpn := nordVPNCmd()
 	if len(os.Args) == 1 {
 		// return value of Status if no args are passed in
 		fmt.Printf("%s", nordvpn["Status"])
 	} else if len(os.Args) == 2 {
-		key := MatchKey(os.Args[1])
+		key := matchKey(os.Args[1])
 		fmt.Printf("%s", nordvpn[key])
 	} else {
 		fmt.Fprintf(os.Stderr, "nordvpn-status can only accept one argument")

@@ -4,6 +4,14 @@ import (
 	"testing"
 )
 
+func TestNordVPNCmd(t *testing.T) {
+	out := nordVPNCmd()
+
+	if len(out) != 9 {
+		t.Errorf("nordVPNCmd() output size was %d, expected 9", len(out))
+	}
+}
+
 func TestSplitLines(t *testing.T) {
 	s := "foo\nbar\nbaz"
 
