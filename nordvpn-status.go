@@ -12,16 +12,15 @@ import (
 )
 
 var (
-	app        = kingpin.New("nordvpn-status", "Utility to retrieve NordVPN status elements. Designed for use in Polybar/Lemonbar.")
-	status     = app.Flag("status", "Connection status").Bool()
-	server     = app.Flag("server", "Current server").Bool()
-	country    = app.Flag("country", "Country").Bool()
-	city       = app.Flag("city", "City").Bool()
-	ip         = app.Flag("ip", "Your new IP").Bool()
-	technology = app.Flag("technology", "Current technology").Bool()
-	protocol   = app.Flag("protocol", "Current protocol").Bool()
-	transfer   = app.Flag("transfer", "Transfer").Bool()
-	uptime     = app.Flag("uptime", "Uptime").Bool()
+	status     = kingpin.Flag("status", "Connection status").Bool()
+	server     = kingpin.Flag("server", "Current server").Bool()
+	country    = kingpin.Flag("country", "Country").Bool()
+	city       = kingpin.Flag("city", "City").Bool()
+	ip         = kingpin.Flag("ip", "Your new IP").Bool()
+	technology = kingpin.Flag("technology", "Current technology").Bool()
+	protocol   = kingpin.Flag("protocol", "Current protocol").Bool()
+	transfer   = kingpin.Flag("transfer", "Transfer").Bool()
+	uptime     = kingpin.Flag("uptime", "Uptime").Bool()
 )
 
 func nordVPNCmd() map[string]string {
