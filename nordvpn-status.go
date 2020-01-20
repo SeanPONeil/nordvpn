@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func NordVPNCmd() map[string]string {
+func nordVPNCmd() map[string]string {
 	out, err := exec.Command("nordvpn", "status").Output()
 	if err != nil {
 		log.Fatal(err)
@@ -59,7 +59,7 @@ func matchKey(arg string) string {
 	if Contains(keys, arg) == true {
 		return arg
 	} else {
-		bagSizes := []int{10}
+		bagSizes := []int{30}
 		cm := closestmatch.New(keys, bagSizes)
 		return cm.Closest(arg)
 	}
@@ -77,7 +77,7 @@ func Contains(slice []string, target string) bool {
 
 func main() {
 
-	nordvpn := NordVPNCmd()
+	nordvpn := nordVPNCmd()
 	if len(os.Args) == 1 {
 		// return value of Status if no args are passed in
 		fmt.Printf("%s", nordvpn["Status"])
