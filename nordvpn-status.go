@@ -19,7 +19,7 @@ func NordVPNCmd() map[string]string {
 	m := map[string]string{}
 
 	for _, s := range splitLines(string(out)) {
-		k, v := ParseKeyValue(s)
+		k, v := parseKeyValue(s)
 		m[k] = v
 	}
 
@@ -35,7 +35,7 @@ func splitLines(s string) []string {
 	return lines
 }
 
-func ParseKeyValue(s string) (string, string) {
+func parseKeyValue(s string) (string, string) {
 	kv := strings.Split(s, ":")
 	k := strings.TrimSpace(kv[0])
 	v := strings.TrimSpace(kv[1])
