@@ -2,13 +2,26 @@ package main
 
 import (
 	"bufio"
-	"flag"
 	"fmt"
 	"github.com/schollz/closestmatch"
+	"gopkg.in/alecthomas/kingpin.v2"
 	"log"
 	"os"
 	"os/exec"
 	"strings"
+)
+
+var (
+	app        = kingpin.New("nordvpn-status", "Utility to retrieve NordVPN status elements. Designed for use in Polybar/Lemonbar.")
+	status     = app.Flag("status", "Connection status").Bool()
+	server     = app.Flag("server", "Current server").Bool()
+	country    = app.Flag("country", "Country").Bool()
+	city       = app.Flag("city", "City").Bool()
+	ip         = app.Flag("ip", "Your new IP").Bool()
+	technology = app.Flag("technology", "Current technology").Bool()
+	protocol   = app.Flag("protocol", "Current protocol").Bool()
+	transfer   = app.Flag("transfer", "Transfer").Bool()
+	uptime     = app.Flag("uptime", "Uptime").Bool()
 )
 
 func nordVPNCmd() map[string]string {
@@ -77,16 +90,8 @@ func Contains(slice []string, target string) bool {
 }
 
 func main() {
-	statusPtr := flag.Bool("status", false, "Connection status")
-	serverPtr := flag.Bool("server", false, "Current server")
-	countryPtr := flag.Bool("country", false, "Country")
-	cityPtr := flag.Bool("city", false, "City")
-	ipPtr := flag.Bool("ip", false, "Your new IP")
-	techPtr := flag.Bool("technology", false, "Current technology")
-	transferPtr := flag.Bool("transfer", false, "Transfer")
-	uptimePtr := flag.Bool("uptimePtr", false, "Uptime")
-	flag.Parse()
 
+	kingpin.Parse()
 	nordvpn := nordVPNCmd()
 	if len(os.Args) == 1 {
 		// return value of Status if no args are passed in
