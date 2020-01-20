@@ -44,7 +44,7 @@ func ParseKeyValue(s string) (string, string) {
 
 // Fuzzy matches arg to NordVPN status key,
 // and returns a valid key
-func MatchKey(arg string) string {
+func matchKey(arg string) string {
 	keys := []string{
 		"Status",
 		"Current server",
@@ -82,7 +82,7 @@ func main() {
 		// return value of Status if no args are passed in
 		fmt.Printf("%s", nordvpn["Status"])
 	} else if len(os.Args) == 2 {
-		key := MatchKey(os.Args[1])
+		key := matchKey(os.Args[1])
 		fmt.Printf("%s", nordvpn[key])
 	} else {
 		fmt.Fprintf(os.Stderr, "nordvpn-status can only accept one argument")
