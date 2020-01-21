@@ -17,8 +17,7 @@ var (
 	uptime     = kingpin.Flag("uptime", "Uptime").Bool()
 )
 
-// Fuzzy matches arg to NordVPN status key,
-// and returns a valid key
+// Match flag argument to NordVPN status key
 func matchKey() string {
 	if *status == true {
 		return "Status"
