@@ -46,7 +46,7 @@ func matchKey() string {
 
 func main() {
 	kingpin.Parse()
-	nordvpn := nordVPNCmd()
+	nordvpn := NordVPNCmd()
 	key := matchKey()
 	fmt.Printf("%s", nordvpn[key])
 }

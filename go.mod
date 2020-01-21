@@ -1,4 +1,4 @@
-module github.com/SeanPONeil/nordvpn-status
+module github.com/seanponeil/nordvpn-status
 
 go 1.12
 

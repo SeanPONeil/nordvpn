@@ -5,7 +5,7 @@ import (
 )
 
 func TestNordVPNCmd(t *testing.T) {
-	out := nordVPNCmd()
+	out := NordVPNCmd()
 
 	if len(out) != 9 {
 		t.Errorf("nordVPNCmd() output size was %d, expected 9", len(out))
