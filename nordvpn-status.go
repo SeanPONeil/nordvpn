@@ -3,10 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/schollz/closestmatch"
 	"gopkg.in/alecthomas/kingpin.v2"
 	"log"
-	"os"
 	"os/exec"
 	"strings"
 )
@@ -57,24 +55,28 @@ func parseKeyValue(s string) (string, string) {
 
 // Fuzzy matches arg to NordVPN status key,
 // and returns a valid key
-func matchKey(arg string) string {
-	keys := []string{
-		"Status",
-		"Current server",
-		"Country",
-		"City",
-		"Your new IP",
-		"Current technology",
-		"Current protocol",
-		"Transfer",
-		"Uptime"}
-
-	if Contains(keys, arg) == true {
-		return arg
+func matchKey() string {
+	if *status == true {
+		return "Status"
+	} else if *server == true {
+		return "Current Server"
+	} else if *country == true {
+		return "Country"
+	} else if *city == true {
+		return "City"
+	} else if *ip == true {
+		return "Your new IP"
+	} else if *technology == true {
+		return "Current technology"
+	} else if *protocol == true {
+		return "Current protocol"
+	} else if *transfer == true {
+		return "Transfer"
+	} else if *uptime == true {
+		return "Uptime"
 	} else {
-		bagSizes := []int{30}
-		cm := closestmatch.New(keys, bagSizes)
-		return cm.Closest(arg)
+		// return connection status if no flags supplied
+		return "Status"
 	}
 }
 
@@ -89,17 +91,8 @@ func Contains(slice []string, target string) bool {
 }
 
 func main() {
-
 	kingpin.Parse()
 	nordvpn := nordVPNCmd()
-	if len(os.Args) == 1 {
-		// return value of Status if no args are passed in
-		fmt.Printf("%s", nordvpn["Status"])
-	} else if len(os.Args) == 2 {
-		key := matchKey(os.Args[1])
-		fmt.Printf("%s", nordvpn[key])
-	} else {
-		fmt.Fprintf(os.Stderr, "nordvpn-status can only accept one argument")
-		os.Exit(1)
-	}
+	key := matchKey()
+	fmt.Printf("%s", nordvpn[key])
 }
