@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/seanponeil/nordvpn-status/nordvpn"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
