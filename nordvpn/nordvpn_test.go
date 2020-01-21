@@ -4,11 +4,11 @@ import (
 	"testing"
 )
 
-func TestNordVPNCmd(t *testing.T) {
-	out := NordVPNCmd()
+func TestStatus(t *testing.T) {
+	out := Status()
 
 	if len(out) != 9 {
-		t.Errorf("nordVPNCmd() output size was %d, expected 9", len(out))
+		t.Errorf("Status() output size was %d, expected 9", len(out))
 	}
 }
 

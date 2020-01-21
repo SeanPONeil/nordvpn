@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func NordVPNCmd() map[string]string {
+func Status() map[string]string {
 	out, err := exec.Command("nordvpn", "status").Output()
 	if err != nil {
 		log.Fatal(err)
