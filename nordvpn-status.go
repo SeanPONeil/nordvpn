@@ -1,12 +1,8 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"gopkg.in/alecthomas/kingpin.v2"
-	"log"
-	"os/exec"
-	"strings"
 )
 
 var (
@@ -20,38 +16,6 @@ var (
 	transfer   = kingpin.Flag("transfer", "Transfer").Bool()
 	uptime     = kingpin.Flag("uptime", "Uptime").Bool()
 )
-
-func nordVPNCmd() map[string]string {
-	out, err := exec.Command("nordvpn", "status").Output()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	m := map[string]string{}
-
-	for _, s := range splitLines(string(out)) {
-		k, v := parseKeyValue(s)
-		m[k] = v
-	}
-
-	return m
-}
-
-func splitLines(s string) []string {
-	var lines []string
-	scanner := bufio.NewScanner(strings.NewReader(s))
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-	return lines
-}
-
-func parseKeyValue(s string) (string, string) {
-	kv := strings.Split(s, ":")
-	k := strings.TrimSpace(kv[0])
-	v := strings.TrimSpace(kv[1])
-	return k, v
-}
 
 // Fuzzy matches arg to NordVPN status key,
 // and returns a valid key
@@ -78,16 +42,6 @@ func matchKey() string {
 		// return connection status if no flags supplied
 		return "Status"
 	}
-}
-
-// Returns true if slice contains target string
-func Contains(slice []string, target string) bool {
-	for _, elem := range slice {
-		if elem == target {
-			return true
-		}
-	}
-	return false
 }
 
 func main() {
