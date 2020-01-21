@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-// Returns the output of
+// Status returns the output of
 //	nordvpn status
 //as a map of key value pairs.
 func Status() map[string]string {
