@@ -4,11 +4,19 @@ import (
 	"testing"
 )
 
-func TestStatus(t *testing.T) {
-	out := Status()
+func TestToMap(t *testing.T) {
+	statusOutput := `Status: Connected
+Current server: us4568.nordvpn.com
+Country: United States
+City: Ann Arbor
+Your new IP: 100.100.100.100
+Current technology: NordLynx
+Transfer: 2.03 MiB received, 413.41 KiB sent
+Uptime: 19 minutes 54 seconds`
 
-	if len(out) != 9 {
-		t.Errorf("Status() output size was %d, expected 9", len(out))
+	outputMap := toMap(statusOutput)
+	if len(outputMap) != 8 {
+		t.Errorf("ToMap() output size was %d, expected 8", len(outputMap))
 	}
 }
 

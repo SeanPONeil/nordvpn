@@ -7,18 +7,20 @@ import (
 	"strings"
 )
 
-// Status returns the output of
-//	nordvpn status
-//as a map of key value pairs.
 func Status() map[string]string {
 	out, err := exec.Command("nordvpn", "status").Output()
 	if err != nil {
 		log.Fatal(err)
 	}
+	return toMap(string(out))
+}
 
+// toMap parses string s into a
+// map of key value pairs.
+func toMap(s string) map[string]string {
 	m := map[string]string{}
 
-	for _, s := range splitLines(string(out)) {
+	for _, s := range splitLines(s) {
 		k, v := parseKeyValue(s)
 		m[k] = v
 	}
